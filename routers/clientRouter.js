@@ -9,7 +9,14 @@ const router = new express.Router()
 
 
 router.get('/',(req,res)=>{
-res.send('Hello')
+
+    let person = {
+
+        age : 23,
+        name:"Nick",
+        DOB:"11/15/2000"
+    }
+res.send(person)
 })
 
 module.exports = router;
