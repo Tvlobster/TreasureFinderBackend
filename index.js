@@ -15,18 +15,17 @@ const port = process.env.PORT
 app.listen(port)
 
 const url = process.env.MONGO_URL
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-
-}, (err) => {
-    if (err) 
-        console.log("Error establishing MongoDB connection!")
-    else 
-        console.log("Connected to DB")
-})
+async function connect() {
+    try {
+        await mongoose.connect(url)
+        console.log("Connected to MongoDB")
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 
+connect();
 
 
 
