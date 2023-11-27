@@ -14,7 +14,8 @@ const app = express()
 const port = process.env.PORT
 app.listen(port)
 
-const url = process.env.MONGO_URL
+//const url = process.env.MONGO_URL
+const url = 'mongodb+srv://primaryUser:XFpMJEmiFHox38up@cluster0.k0ipswr.mongodb.net/?retryWrites=true&w=majority'
 
 async function connect() {
     try {
