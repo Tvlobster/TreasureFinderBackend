@@ -11,8 +11,20 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1"
   },
+<<<<<<< HEAD
   "engines": {
     "node": "16"
   }
+=======
+  "name": "treasurefinderbackend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+>>>>>>> 3a66e4b3d8f6a1fbe22fea579132bf795503aaed
 }
 

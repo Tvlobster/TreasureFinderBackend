@@ -7,9 +7,7 @@ const sellerRouters = require('./routers/sellerRouter');
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 
-
-
-
+ 
 //middle ware
 const app = express()
 //this starts the server and assignes its port
