@@ -8,15 +8,39 @@ const express = require("express")
 const router = new express.Router()
 
 
-router.get('/',(req,res)=>{
+router.get('/user/login',(req,res)=>{
 
-    let person = {
 
-        age : 23,
-        name:"Nick",
-        DOB:"11/15/2000"
-    }
-res.send(person)
+
+
+
+
+})
+
+
+
+
+
+
+
+//gets a users own items
+router.get('/user/items',(req,res)=>{
+
+
+
+
+
+
+})
+
+//gets all
+router.get('/treasure',(req,res)=>{
+
+
+
+
+
+
 })
 
 module.exports = router;
