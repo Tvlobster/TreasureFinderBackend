@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo')
 //middle ware
 const app = express()
 //this starts the server and assignes its port
+app.use(express.json())
 const port = process.env.PORT
 app.listen(port)
 

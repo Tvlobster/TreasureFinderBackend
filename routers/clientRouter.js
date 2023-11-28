@@ -1,5 +1,5 @@
 const express = require("express")
-
+const User = require("../models/User")
 
 
 
@@ -8,13 +8,31 @@ const express = require("express")
 const router = new express.Router()
 
 
-router.get('/user/login',(req,res)=>{
+
+router.post('/users/register',async (req,res)=>{
+    let userFromBody = req.body;
+try {
+     const user = new User(userFromBody);
+     let x = await user.save();
+     x.password = "";
+     res.send({user:x})
+    
+} catch (error){
+    res.send({error:error})
+}
 
 
 
+});
+router.get('/users',async (req,res)=>{
 
+    try{
+        let users = await User.find({}).exec();
+        res.send({users:users})
+    
+    }catch(error){
 
-
+    }
 })
 
 
