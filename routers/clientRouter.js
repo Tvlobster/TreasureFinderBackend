@@ -11,6 +11,7 @@ const router = new express.Router()
 
 router.post('/users/register',async (req,res)=>{
     let userFromBody = req.body;
+    console.log("User Connected to /users/register")
 try {
      const user = new User(userFromBody);
      let x = await user.save();
@@ -34,7 +35,7 @@ router.get('/users',async (req,res)=>{
 
     }
 })
-
+router.delete('/users')
 
 
 
