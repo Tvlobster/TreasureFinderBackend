@@ -27,7 +27,7 @@ try {
 
 })
 router.get('/login',async (req,res)=>{
-    let username = req.body.user_name
+    let username = req.body.username
     let password = req.body.password
 
     const user = await User.findOne({username:username})
