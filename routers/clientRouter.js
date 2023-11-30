@@ -1,5 +1,6 @@
 const express = require("express")
 const User = require("../models/User")
+const bcrypt = require('bcrypt')
 
 
 
@@ -13,6 +14,7 @@ router.post('/users/register',async (req,res)=>{
     let userFromBody = req.body;
     console.log("User Connected to /users/register")
 try {
+    userFromBody.password = await bcrypt.hash(userFromBody.password,8);
      const user = new User(userFromBody);
      let x = await user.save();
      x.password = "";
@@ -23,8 +25,28 @@ try {
 }
 
 
+})
+router.get('/login',async (req,res)=>{
+    let username = req.body.user_name
+    let password = req.body.password
 
-});
+    const user = await User.findOne({username:username})
+    if(!user){
+        res.send("Incorrect Username or Password")
+    } else {
+        const isMatch = await bcrypt.compare(password,user.password)
+
+        if(isMatch){
+            res.send({id:user.id})
+        } else {
+            res.send("Error logging in. Incorrect Username or password")
+        }
+    
+    }
+
+
+
+})
 router.get('/users',async (req,res)=>{
 
     try{
