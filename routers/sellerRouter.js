@@ -23,7 +23,10 @@ router.post('/seller/newGarageSale',async (req,res)=>{
 
 })
 
-
+router.get('/items',async (req,res)=>{
+    let Items = await Item.find({})
+    res.send({listOfItems:Items})
+})
 
 
 module.exports = router;
