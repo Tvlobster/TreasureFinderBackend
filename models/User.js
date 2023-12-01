@@ -6,5 +6,16 @@ const userSchema = new mongoose.Schema({
     password: {type:String, required:true}
 })
 
+
+userSchema.virtual('GarageSale',{
+    ref:'GarageSale',
+    localField:'_id',
+    foreignField:'owner'
+})
+
+userSchema.set('toObject',{virtuals:true})
+userSchema.set('toJSON',{virtuals:true})
+
+
 const User = mongoose.model('User', userSchema, 'Users')
 module.exports = User

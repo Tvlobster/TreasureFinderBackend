@@ -57,12 +57,6 @@ router.get('/users',async (req,res)=>{
 
     }
 })
-router.delete('/users')
-
-
-
-
-
 
 //gets a users own items
 router.get('/user/items',(req,res)=>{
@@ -74,14 +68,5 @@ router.get('/user/items',(req,res)=>{
 
 })
 
-//gets all
-router.get('/treasure',(req,res)=>{
-
-
-
-
-
-
-})
 
 module.exports = router;
