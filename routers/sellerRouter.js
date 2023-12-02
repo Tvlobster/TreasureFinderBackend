@@ -5,14 +5,14 @@ const GarageSale = require("../models/GarageSale")
 const router = new express.Router()
 
 
-router.get('/seller/allGarageSales',async (req,res)=>{
+router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
     console.log("User connected to /seller/allGarageSales")
     console.log(req.body)
     let GarageSales = await GarageSale.find({})
     res.send({listOfGarageSales:GarageSales})
 })
 
-router.post('/seller/newGarageSale',async (req,res)=>{
+router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
     let garageSaleFromBody = req.body;
     console.log(req.body)
     try {
@@ -25,10 +25,30 @@ router.post('/seller/newGarageSale',async (req,res)=>{
 
 })
 
-router.get('/items',async (req,res)=>{
+router.get('/items',authenticateUser,async (req,res)=>{
     let Items = await Item.find({})
     res.send({listOfItems:Items})
 })
 
+
+
+async function authenticateUser(req,res,next){
+    console.log(req.session)
+    if(!req.session.user_id){
+        console.log("Unauthorized user")
+        return res.send('You are not logged in')
+    }
+    else{
+        try {
+            const user = await User.findById(req.session.user_id)
+            req.user = user
+            next()
+        }
+        catch(e){
+            res.send(e)
+        }
+        
+    }
+}
 
 module.exports = router;
