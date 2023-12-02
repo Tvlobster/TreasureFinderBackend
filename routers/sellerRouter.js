@@ -36,7 +36,7 @@ async function authenticateUser(req,res,next){
     console.log(req.session)
     if(!req.session.user_id){
         console.log("Unauthorized user")
-        return res.send('You are not logged in')
+        return res.send({error:"Unauthorized user"})
     }
     else{
         try {

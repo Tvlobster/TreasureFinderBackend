@@ -35,7 +35,7 @@ router.post('/login',async (req,res)=>{
 
     const user = await User.findOne({username:username})
     if(!user){
-        res.send("ERROR")
+        res.send({error:"error"})
     } else {
         const isMatch = await bcrypt.compare(password,user.password)
 
@@ -43,7 +43,7 @@ router.post('/login',async (req,res)=>{
             req.session.user_id = user._id;
             res.send({id:user.id})
         } else {
-            res.send("ERROR")
+            res.send({error:"error"})
         }
     
     }
@@ -79,7 +79,7 @@ async function authenticateUser(req,res,next){
     console.log(req.session)
     if(!req.session.user_id){
         console.log("Unauthorized user")
-        return res.send('You are not logged in')
+        return res.send({error:"Unauthroized user"})
     }
     else{
         try {
