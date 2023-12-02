@@ -40,6 +40,7 @@ router.post('/login',async (req,res)=>{
         const isMatch = await bcrypt.compare(password,user.password)
 
         if(isMatch){
+            req.session.user_id = user._id;
             res.send({id:user.id})
         } else {
             res.send("ERROR")
@@ -50,7 +51,7 @@ router.post('/login',async (req,res)=>{
 
 
 })
-router.get('/users',async (req,res)=>{
+router.get('/users',authenticateUser,async (req,res)=>{
 
     try{
         let users = await User.find({}).exec();
@@ -70,6 +71,32 @@ router.get('/user/items',(req,res)=>{
 
 
 })
+
+
+
+//makes sure the user is logged in
+async function authenticateUser(req,res,next){
+    console.log(req.session)
+    if(!req.session.user_id){
+        console.log("Unauthorized user")
+        return res.send('You are not logged in')
+    }
+    else{
+        try {
+            const user = await User.findById(req.session.user_id)
+            req.user = user
+            next()
+        }
+        catch(e){
+            res.send(e)
+        }
+        
+    }
+}
+
+
+
+
 
 
 module.exports = router;

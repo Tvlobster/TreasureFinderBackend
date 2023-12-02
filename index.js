@@ -28,7 +28,14 @@ async function connect() {
 
 connect();
 
-
+app.use(session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: url
+    })
+}))
 
 
 app.use(clientRouters);
