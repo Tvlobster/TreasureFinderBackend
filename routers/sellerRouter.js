@@ -27,7 +27,7 @@ router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
 
 
 
-        res.send({listOfGarageSales:GarageSales})
+        res.send({listOfGarageSales:newGarageSale})
     } catch (error) {
         res.send(error);
     }
