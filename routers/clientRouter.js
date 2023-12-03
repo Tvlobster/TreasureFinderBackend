@@ -1,5 +1,7 @@
 const express = require("express")
 const User = require("../models/User")
+const Items = require("../models/Item")
+const GarageSale = require("../models/GarageSale")
 const bcrypt = require('bcrypt')
 
 
@@ -63,7 +65,7 @@ router.get('/users',authenticateUser,async (req,res)=>{
 })
 
 //gets a users own items
-router.get('/user/items',(req,res)=>{
+router.get('/user/items',authenticateUser,(req,res)=>{
 
 
 
@@ -71,6 +73,11 @@ router.get('/user/items',(req,res)=>{
 
 
 })
+
+//deletes user from the database.
+router.delete('/user/delete',authenticateUser,(req,res)=>{
+
+});
 
 
 
