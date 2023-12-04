@@ -12,11 +12,20 @@ const garageSaleSchema = new mongoose.Schema({
     ]
 })
 
-garageSaleSchema.virtual('GarageSale',{
+garageSaleSchema.virtual('Item',{
     ref:'Item',
     localField:'_id',
     foreignField:'owner'
 })
+garageSaleSchema.virtual('User',{
+    ref:'User',
+    localField:'owner',
+    foreignField:'_id'
+})
+
+
+
+
 
 garageSaleSchema.set('toObject',{virtuals:true})
 garageSaleSchema.set('toJSON',{virtuals:true})
