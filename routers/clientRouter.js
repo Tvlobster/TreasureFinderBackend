@@ -3,6 +3,7 @@ const User = require("../models/User")
 const Items = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
 const bcrypt = require('bcrypt')
+const Item = require("../models/Item")
 
 
 
@@ -65,14 +66,43 @@ router.get('/users',authenticateUser,async (req,res)=>{
 })
 
 //gets a users own items
-router.get('/user/items',authenticateUser,(req,res)=>{
+router.get('/user/items',authenticateUser,async (req,res)=>{
+try{
+    let items = await Item.findById(req.session._id);
+    res.send({items});
+
+}catch(error){
+    res.send({error})
+}
+
+});
+
+
+
+//get a users own garageSales
+router.get('/user/garageSales',authenticateUser,async (req,res)=>{
+try{
+
+    let garageSales = await GarageSale.findById(req.session._id);
+    res.send({garageSales});
+
+
+}catch(error){
+    res.send(error)
+}
+});
 
 
 
 
 
 
-})
+router.post('/users/logout',authenticateUser,(req,res)=>{
+req.session.destroy(()=>{
+console.log("Logged out successfully");
+res.send({log:"Logged user out"})
+});
+});
 
 //deletes user from the database.
 router.delete('/user/delete',authenticateUser,(req,res)=>{

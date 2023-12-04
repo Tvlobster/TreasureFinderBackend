@@ -8,7 +8,7 @@ const router = new express.Router()
 router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
     console.log("User connected to /seller/allGarageSales")
     console.log(req.body)
-    let GarageSales = await GarageSale.find({})
+    let GarageSales = await GarageSale.find({}).populate('User').exec();
     res.send({listOfGarageSales:GarageSales})
 })
 
@@ -56,6 +56,10 @@ router.delete('/seller/deleteGarageSale',authenticateUser,async(req,res)=>{
 
 
 })
+
+
+
+
 
 
 
