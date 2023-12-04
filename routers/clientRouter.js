@@ -68,7 +68,7 @@ router.get('/users',authenticateUser,async (req,res)=>{
 //gets a users own items
 router.get('/user/items',authenticateUser,async (req,res)=>{
 try{
-    let items = await Item.findById(req.session._id);
+    let items = await Item.find(req.session._id);
     res.send({items});
 
 }catch(error){
@@ -83,7 +83,7 @@ try{
 router.get('/user/garageSales',authenticateUser,async (req,res)=>{
 try{
 
-    let garageSales = await GarageSale.findById(req.session._id);
+    let garageSales = await GarageSale.find(req.session._id);
     res.send({garageSales});
 
 
