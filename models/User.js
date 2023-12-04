@@ -12,7 +12,11 @@ userSchema.virtual('GarageSale',{
     localField:'_id',
     foreignField:'owner'
 })
-
+userSchema.virtual('Item',{
+ref:'Item',
+localField:'_id',
+foreignField:'owner'
+});
 userSchema.set('toObject',{virtuals:true})
 userSchema.set('toJSON',{virtuals:true})
 
