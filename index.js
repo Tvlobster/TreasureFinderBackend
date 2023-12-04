@@ -69,7 +69,7 @@ function notifyNewGarageSale(garageSaleInfo) {
 
 // Simulate a new garage sale notification every 30 seconds (for testing)
 setInterval(() => {
-    notifyNewGarageSale({ title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
+   // notifyNewGarageSale({ title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
 }, 30000);
 
 

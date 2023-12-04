@@ -68,7 +68,7 @@ router.get('/users',authenticateUser,async (req,res)=>{
 //gets a users own items
 router.get('/user/items',authenticateUser,async (req,res)=>{
 try{
-    let user = await User.findById(req.session._id).populate('Item').exec()
+    let user = await User.findById(req.session.user_id).populate('Item').exec()
 
     res.send({user});
 
@@ -84,7 +84,7 @@ try{
 router.get('/user/garageSales',authenticateUser,async (req,res)=>{
 try{
 
-    let user = await User.findById(req.session._id).populate('GarageSale').exec()
+    let user = await User.findById(req.session.user_id).populate('GarageSale').exec()
 
     res.send({user});
 
