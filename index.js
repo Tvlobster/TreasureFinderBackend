@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
 
 
 const port = process.env.PORT
-app.listen(port)
+//app.listen(port)
 
 const url = process.env.MONGO_URL
 async function connect() {
@@ -75,8 +75,8 @@ setInterval(() => {
 
 
 
-server.listen(4000, () =>{
-console.log('Listening on port 4000')
+server.listen(process.env.PORT || 4000, () => {
+    console.log(`Listening on port ${process.env.PORT || 4000}`);
 });
 
 
