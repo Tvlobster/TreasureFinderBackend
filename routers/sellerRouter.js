@@ -2,8 +2,7 @@ const express = require("express")
 const User = require("../models/User")
 const Item = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
-const index = require("../index")
-const { io } = require("../index");
+const socket = require('../modules/socketIOSetup');
 
 const router = new express.Router()
 
@@ -115,6 +114,7 @@ async function authenticateUser(req,res,next){
 
 
 function notifyNewGarageSale(garageSaleInfo) {
+    const io = socket.getIo();
     io.emit('newGarageSale', garageSaleInfo);
     console.log("Send new garage sale")
 }

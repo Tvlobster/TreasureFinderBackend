@@ -6,7 +6,7 @@ const clientRouters = require('./routers/clientRouter');
 const sellerRouters = require('./routers/sellerRouter');
 const session = require('express-session')
 const http = require('http')
-const socketIo = require('socket.io')
+const socket = require('./modules/socketIOSetup')
 const MongoStore = require('connect-mongo')
 
 
@@ -18,19 +18,8 @@ app.use(express.json())
 
 
 const server = http.createServer(app);
-const io = socketIo(server);
 
-
-
-io.on('connection', (socket) => {
-    console.log('New client connected');
-
-    socket.on('disconnect', () => {
-        console.log('Client disconnected');
-    });
-});
-
-
+socket.initialize(server);
 
 
 
