@@ -40,9 +40,10 @@ router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
 router.delete('/seller/deleteGarageSale',authenticateUser,async(req,res)=>{
     try {
         console.log("User connected to /seller/deleteGarageSale");
-        const garageSaleId = req.body.id;
-        const garageSale = await GarageSale.findById(garageSaleId);
-
+        let garageSaleId = req.body.id;
+        console.log(garageSaleId)
+        let garageSale = await GarageSale.findById(garageSaleId);
+        console.log(garageSale);
         if (!garageSale) {
             return res.send({ error: 'GarageSale not found' });
         }
