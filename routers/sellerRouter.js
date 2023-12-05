@@ -37,10 +37,10 @@ router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
 
 })
 //deletes a garageSale
-router.delete('/seller/deleteGarageSale',authenticateUser,async(req,res)=>{
+router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
     try {
         console.log("User connected to /seller/deleteGarageSale");
-        let garageSaleId = req.body.id;
+        let garageSaleId = req.params.id;
         console.log(garageSaleId)
         let garageSale = await GarageSale.findById(garageSaleId);
         console.log(garageSale);
