@@ -2,6 +2,7 @@ const express = require("express")
 const User = require("../models/User")
 const Item = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
+const index = require("../index")
 const router = new express.Router()
 
 //finds all garageSales
@@ -21,14 +22,10 @@ router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
         console.log("User connected to /seller/newGarageSale")
        let newGarageSale = new GarageSale(garageSaleFromBody);
        newGarageSale.owner = req.session.user_id;
-
        const save = await newGarageSale.save()
+
+       index.io.emit('newGarageSale', { title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
        res.send(save);
-
-
-
-
-        res.send({listOfGarageSales:newGarageSale})
     } catch (error) {
         res.send(error);
     }
