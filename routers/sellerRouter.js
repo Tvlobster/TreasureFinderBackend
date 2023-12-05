@@ -24,7 +24,7 @@ router.post('/seller/newGarageSale',authenticateUser,async (req,res)=>{
        newGarageSale.owner = req.session.user_id;
        const save = await newGarageSale.save()
 
-       io.emit('newGarageSale', { title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
+       notifyNewGarageSale({ title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
 
 
        res.send(save);
@@ -108,4 +108,10 @@ async function authenticateUser(req,res,next){
     }
 }
 
+
+
+function notifyNewGarageSale(garageSaleInfo) {
+    io.emit('newGarageSale', garageSaleInfo);
+    console.log("Send new garage sale")
+}
 module.exports = router;
