@@ -75,3 +75,8 @@ server.listen(process.env.PORT || 4000, () => {
 
 app.use(clientRouters);
 app.use(sellerRouters);
+
+
+
+
+module.exports.io = io;
