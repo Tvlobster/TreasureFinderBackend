@@ -61,7 +61,15 @@ app.use(session({
     })
 }))
 
+function notifyNewGarageSale(garageSaleInfo) {
+    io.emit('newGarageSale', garageSaleInfo);
+    console.log("Send new garage sale")
+}
 
+// Simulate a new garage sale notification every 30 seconds (for testing)
+setInterval(() => {
+notifyNewGarageSale({ title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
+}, 30000);
 
 
 
