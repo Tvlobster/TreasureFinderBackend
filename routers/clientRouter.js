@@ -72,8 +72,6 @@ try{
 
     let users = await User.findById(req.session.user_id).populate('Item').exec()
 
-    users.user.password = "";
-
     console.log(users);
     res.send({users});
 
