@@ -3,7 +3,10 @@ const User = require("../models/User")
 const Item = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
 const index = require("../index")
+const { io } = require("../index");
+
 const router = new express.Router()
+
 
 //finds all garageSales
 router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
