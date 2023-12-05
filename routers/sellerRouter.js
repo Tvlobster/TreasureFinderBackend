@@ -52,8 +52,8 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
             return res.send({ error: 'Not authorized to delete this garage sale' });
         }
 
-        await garageSale.remove();
-        res.send({ message: 'GarageSale deleted successfully' });
+        const deleteGarageSale = await GarageSale.findByIdAndDelete(req.params.id)
+        res.send({deleteGarageSale});
     } catch (error) {
         res.send(error);
     }
