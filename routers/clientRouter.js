@@ -92,7 +92,7 @@ try{
     console.log("User Connected to /user/garageSales")
     let users = await User.findById(req.session.user_id).populate('GarageSale').exec()
 
-    users.user.password = "";
+    //users.user.password = "";
 
     console.log(users);
     res.send({users});
