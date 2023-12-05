@@ -10,8 +10,8 @@ router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
     console.log(req.body)
     let GarageSales = await GarageSale.find({}).populate('User').exec();
 
-    for(let i = 0; i<users.listOfGarageSales.length;i++){
-        users.listOfGarageSales[i].User[0].password = "";
+    for(let i = 0; i<GarageSales.listOfGarageSales.length;i++){
+        GarageSales.listOfGarageSales[i].User[0].password = "";
     }
     res.send({listOfGarageSales:GarageSales})
 })
