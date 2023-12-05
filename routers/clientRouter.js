@@ -68,11 +68,13 @@ router.get('/users',authenticateUser,async (req,res)=>{
 //gets a users own items
 router.get('/user/items',authenticateUser,async (req,res)=>{
 try{
+    console.log("User Connected to /user/items")
 
     let users = await User.findById(req.session.user_id).populate('Item').exec()
 
     users.user.password = "";
 
+    console.log(users);
     res.send({users});
 
 }catch(error){
@@ -87,11 +89,12 @@ try{
 router.get('/user/garageSales',authenticateUser,async (req,res)=>{
 try{
 
+    console.log("User Connected to /user/garageSales")
     let users = await User.findById(req.session.user_id).populate('GarageSale').exec()
 
     users.user.password = "";
 
-
+    console.log(users);
     res.send({users});
 
 }catch(error){
