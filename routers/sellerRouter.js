@@ -11,10 +11,8 @@ const router = new express.Router()
 //finds all garageSales
 router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
     console.log("User connected to /seller/allGarageSales")
-    console.log(req.body)
-    let GarageSales = await GarageSale.find({}).populate('User').exec();
-
-    res.send({listOfGarageSales:GarageSales})
+    let users = await User.find({}).populate('User').populate('Item').exec();
+    res.send({listOfAllUsers:users})
 })
 
 //adds a new Garage Sale
