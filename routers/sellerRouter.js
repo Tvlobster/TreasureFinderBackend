@@ -3,6 +3,7 @@ const User = require("../models/User")
 const Item = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
 const socket = require('../modules/socketIOSetup');
+const io = socket.getIo();
 
 const router = new express.Router()
 
@@ -68,6 +69,25 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
 
 
 
+router.post('/seller/newItem',authenticateUser,async (req,res)=>{
+    let itemFromBody = req.body;
+    console.log(req.body)
+    try {
+        console.log("User connected to /seller/newItem")
+       let newItem = new Item(itemFromBody);
+       newItem.owner = req.session.user_id;
+       const save = await newItem.save()
+
+       res.send(save);
+    } catch (error) {
+        res.send(error);
+    }
+
+})
+
+
+
+
 
 
 
@@ -92,30 +112,20 @@ router.get('/items',authenticateUser,async (req,res)=>{
 
 
 
-async function authenticateUser(req,res,next){
-    console.log(req.session)
-    if(!req.session.user_id){
-        console.log("Unauthorized user")
-        return res.send({error:"Unauthorized user"})
-    }
-    else{
-        try {
-            const user = await User.findById(req.session.user_id)
-            req.user = user
-            next()
-        }
-        catch(e){
-            res.send(e)
-        }
-        
-    }
+function notifydeleteRequest(requestInfo,user_id){
+    io.emit('deleteRequest_'+user_id,requestInfo)
+    console.log("New Request Sent for user " + user_id)
 }
+
 
 
 
 function notifyNewGarageSale(garageSaleInfo) {
-    const io = socket.getIo();
+
     io.emit('newGarageSale', garageSaleInfo);
     console.log("Send new garage sale")
 }
+
+
+
 module.exports = router;
