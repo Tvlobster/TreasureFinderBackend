@@ -136,10 +136,7 @@ async function authenticateUser(req,res,next){
 }
 
 
-function notifyNewGarageSale(garageSaleInfo) {
-    io.emit('newGarageSale', garageSaleInfo);
-    console.log("Send new garage sale")
-}
+
 
 
 
