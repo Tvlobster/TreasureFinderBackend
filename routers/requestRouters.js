@@ -4,6 +4,7 @@ const Items = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
 const bcrypt = require('bcrypt')
 const Item = require("../models/Item")
+const socket = require('../modules/socketIOSetup');
 const io = socket.getIo();
 
 const router = new express.Router()
