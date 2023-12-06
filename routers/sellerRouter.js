@@ -8,7 +8,7 @@ const router = new express.Router()
 
 
 //finds all garageSales
-router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
+router.get('/seller/allGarageSales',authenticateUser ,async (req,res)=>{
     console.log("User connected to /seller/allGarageSales")
     let users = await User.find({}).populate('User').populate('Item').exec();
     res.send({listOfAllUsers:users})
@@ -104,7 +104,24 @@ router.get('/items',authenticateUser,async (req,res)=>{
 })
 
 
-
+async function authenticateUser(req,res,next){
+    console.log(req.session)
+    if(!req.session.user_id){
+        console.log("Unauthorized user")
+        return res.send({error:"Unauthorized user"})
+    }
+    else{
+        try {
+            const user = await User.findById(req.session.user_id)
+            req.user = user
+            next()
+        }
+        catch(e){
+            res.send(e)
+        }
+        
+    }
+}
 
 
 

@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const clientRouters = require('./routers/clientRouter');
 const sellerRouters = require('./routers/sellerRouter');
+const requestRouters = require('./routers/requestRouters');
 const session = require('express-session')
 const http = require('http')
 const socket = require('./modules/socketIOSetup')
@@ -63,4 +64,5 @@ server.listen(process.env.PORT || 4000, () => {
 
 app.use(clientRouters);
 app.use(sellerRouters);
+app.use(requestRouters);
 

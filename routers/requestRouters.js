@@ -5,7 +5,7 @@ const GarageSale = require("../models/GarageSale")
 const bcrypt = require('bcrypt')
 const Item = require("../models/Item")
 const socket = require('../modules/socketIOSetup');
-const io = socket.getIo();
+
 
 const router = new express.Router()
 
@@ -33,6 +33,7 @@ try {
 
 
 function notifyNewRequest(requestInfo,user_id){
+    const io = socket.getIo();
     io.emit('newItemRequest_'+user_id,requestInfo)
     console.log("New Request Sent for user " + user_id)
 }
@@ -59,3 +60,5 @@ async function authenticateUser(req,res,next){
         
     }
 }
+
+module.exports = router;
