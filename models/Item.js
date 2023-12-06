@@ -5,7 +5,9 @@ const itemSchema = new mongoose.Schema({
     price: {type:Number, min:0, required:true},
     image: {type:String},
     owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    description: {type:String}
+    description: {type:String},
+    request: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    saleId: {type: mongoose.Schema.Types.ObjectId, ref: 'GarageSale'}
 })
 
 const Item = mongoose.model('Item', itemSchema, 'Items')
