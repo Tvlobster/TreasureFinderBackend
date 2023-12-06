@@ -3,7 +3,6 @@ const User = require("../models/User")
 const Item = require("../models/Item")
 const GarageSale = require("../models/GarageSale")
 const socket = require('../modules/socketIOSetup');
-const io = socket.getIo();
 
 const router = new express.Router()
 
@@ -111,6 +110,7 @@ router.get('/items',authenticateUser,async (req,res)=>{
 
 
 function notifydeleteRequest(requestInfo,user_id){
+    const io = socket.getIo();
     io.emit('deleteRequest_'+user_id,requestInfo)
     console.log("New Request Sent for user " + user_id)
 }
@@ -119,7 +119,7 @@ function notifydeleteRequest(requestInfo,user_id){
 
 
 function notifyNewGarageSale(garageSaleInfo) {
-
+    const io = socket.getIo();
     io.emit('newGarageSale', garageSaleInfo);
     console.log("Send new garage sale")
 }
