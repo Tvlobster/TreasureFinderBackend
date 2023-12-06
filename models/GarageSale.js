@@ -6,7 +6,10 @@ const garageSaleSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now, required:true},
     address: {type: String, required:true},
     startTime: {type:Number, required:true},
-    endTime: {type:Number, required:true}
+    endTime: {type:Number, required:true},
+    items: [
+        {type: mongoose.Schema.Types.ObjectId, ref: 'Item'}
+    ]
 })
 
 garageSaleSchema.virtual('User',{
