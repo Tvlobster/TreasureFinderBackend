@@ -18,6 +18,12 @@ garageSaleSchema.virtual('User',{
     foreignField:'_id'
 })
 
+garageSaleSchema.virtual('Item',{
+    ref:'Item',
+    localField:'items',
+    foreignField:'_id'
+})
+
 garageSaleSchema.set('toObject',{virtuals:true})
 garageSaleSchema.set('toJSON',{virtuals:true})
 
