@@ -27,6 +27,14 @@ try {
 
 
 
+router.get('/Not',authenticateUser,async (req,res)=>{
+    notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },"656a5f55e665274c505b36a1")
+    res.send("Notification Sent")
+})
+
+
+
+
 
 
 

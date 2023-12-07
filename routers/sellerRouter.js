@@ -95,7 +95,20 @@ router.delete('/seller/deleteItem',authenticateUser,async (req,res)=>{
 
     try {
         console.log("User connected to /seller/deleteItem")
+
         let deleteItem = await Item.findByIdAndDelete(itemFromBody.id);
+
+        let garageSale = await GarageSale.findById(deleteItem.saleId)
+
+        console.log(garageSale)
+        const index = garageSale.items.indexOf(deleteItem.id)
+        if (index > -1){
+            garageSale.items.splice(index);
+        }
+        const save = await garageSale.save();
+
+
+
         res.send(deleteItem);
     } catch (error) {
         res.send(error)
