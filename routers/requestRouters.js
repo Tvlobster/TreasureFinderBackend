@@ -11,20 +11,18 @@ const router = new express.Router()
 
 
 router.post('/request/new/:id',authenticateUser,async (req,res)=>{
-    notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },req.params.id)
-// try {
-//     let item = await Item.findById(req.params.id);
-//    item.request = req.session.user_id;
+try {
+    let item = await Item.findById(req.params.id);
+   item.request = req.session.user_id;
+   notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },item.owner)
+    const save = item.save();
 
-//     notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },req.session.user_id)
-//     const save = item.save();
-
-//     res.send({request:save})
+    res.send({request:save})
 
 
-// } catch (error) {
-//     res.send({error:error})
-// }
+} catch (error) {
+    res.send({error:error})
+ }
 res.send({Done:"Done"})
 });
 
