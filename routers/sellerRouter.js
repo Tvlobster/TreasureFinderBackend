@@ -72,6 +72,10 @@ router.post('/seller/newItem',authenticateUser,async (req,res)=>{
     try {
         console.log("User connected to /seller/newItem")
        let newItem = new Item(itemFromBody);
+       let editGarage = await GarageSale.findById(itemFromBody.saleId)
+       editGarage.items.push(newItem.id)
+       
+       const saveGarage = await editGarage.save();
        newItem.owner = req.session.user_id;
        const save = await newItem.save()
 
