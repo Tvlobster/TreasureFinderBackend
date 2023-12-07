@@ -13,7 +13,14 @@ const router = new express.Router()
 router.post('/request/new/:id',authenticateUser,async (req,res)=>{
 try {
     let item = await Item.findById(req.params.id);
+    console.log(item.request)
+    if (item.request != "" && item.request != undefined && item.request != null){
+        return res.send({Error:"Someone has already requested this item"});
+    }
+
    item.request = req.session.user_id;
+   
+
    notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },item.owner)
     const save = await item.save();
 

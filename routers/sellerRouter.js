@@ -49,7 +49,7 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
             return res.send({ error: 'Not authorized to delete this garage sale' });
         }
 
-        
+
         for (let i = 0; i < garageSale.items.length; i++) {
             await Item.findByIdAndDelete(garageSale.items[i]);
         }
@@ -103,6 +103,7 @@ router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
 
         let garageSale = await GarageSale.findById(deleteItem.saleId)
 
+        notifydeleteRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },item.request)
         console.log(garageSale)
         const index = garageSale.items.indexOf(deleteItem.id)
         if (index > -1){
