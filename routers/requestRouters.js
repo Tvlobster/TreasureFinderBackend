@@ -15,7 +15,7 @@ try {
     let item = await Item.findById(req.params.id);
    item.request = req.session.user_id;
    notifyNewRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },item.owner)
-    const save = item.save();
+    const save = await item.save();
 
     res.send({request:save})
 
@@ -23,7 +23,6 @@ try {
 } catch (error) {
     res.send({error:error})
  }
-res.send({Done:"Done"})
 });
 
 
