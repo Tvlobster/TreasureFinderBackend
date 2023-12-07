@@ -25,7 +25,6 @@ router.post('/request/new/:id',authenticateUser,async (req,res)=>{
 // } catch (error) {
 //     res.send({error:error})
 // }
-
 res.send({Done:"Done"})
 });
 
@@ -36,7 +35,8 @@ res.send({Done:"Done"})
 
 function notifyNewRequest(requestInfo,user_id){
     const io = socket.getIo();
-    io.emit('newItemRequest_'+user_id,requestInfo)
+    console.log("newItemRequest_"+user_id)
+    io.emit("newItemRequest_"+user_id,requestInfo)
     console.log("New Request Sent for user " + user_id)
 }
 
