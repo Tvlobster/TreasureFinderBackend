@@ -51,7 +51,8 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
 
 
         for (let i = 0; i < garageSale.items.length; i++) {
-            await Item.findByIdAndDelete(garageSale.items[i]);
+           let deletedItem = await Item.findByIdAndDelete(garageSale.items[i]);
+           notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },deletedItem.request)
         }
 
 
@@ -103,15 +104,14 @@ router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
 
         let garageSale = await GarageSale.findById(deleteItem.saleId)
 
-        notifydeleteRequest({ title: 'New Request Item', description: 'Someone Requested one of the items in your sale!' },item.request)
+        notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },item.request)
         console.log(garageSale)
         const index = garageSale.items.indexOf(deleteItem.id)
         if (index > -1){
             garageSale.items.splice(index);
         }
         const save = await garageSale.save();
-
-
+        
 
         res.send(deleteItem);
     } catch (error) {
