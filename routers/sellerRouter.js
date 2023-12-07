@@ -89,14 +89,11 @@ router.post('/seller/newItem',authenticateUser,async (req,res)=>{
 
 
 
-router.delete('/seller/deleteItem',authenticateUser,async (req,res)=>{
-    let itemFromBody = req.body;
-    console.log(itemFromBody)
-
+router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
     try {
         console.log("User connected to /seller/deleteItem")
 
-        let deleteItem = await Item.findByIdAndDelete(itemFromBody.id);
+        let deleteItem = await Item.findByIdAndDelete(req.params.id);
 
         let garageSale = await GarageSale.findById(deleteItem.saleId)
 
