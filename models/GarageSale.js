@@ -5,8 +5,8 @@ const garageSaleSchema = new mongoose.Schema({
     owner:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required:true},
     date: {type: Date, default: Date.now, required:true},
     address: {type: String, required:true},
-    startTime: {type:Number, required:true},
-    endTime: {type:Number, required:true},
+    startTime: {type:String, required:true},
+    endTime: {type:String, required:true},
     items: [
         {type: mongoose.Schema.Types.ObjectId, ref: 'Item'}
     ]
@@ -21,7 +21,7 @@ garageSaleSchema.virtual('User',{
 garageSaleSchema.virtual('Item',{
     ref:'Item',
     localField:'items',
-    foreignField:'_id'
+    foreignField:'_id',
     localField:'_id',
     foreignField:'owner'
 })
