@@ -106,12 +106,12 @@ router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
 
         notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },deleteItem.request)
         console.log(garageSale)
-        const index = garageSale.items.indexOf(deleteItem.id)
+        const index = garageSale.items.indexOf(req.params.id)
         if (index > -1){
             garageSale.items.splice(index);
         }
         const save = await garageSale.save();
-        
+        console.log(save)
 
         res.send(deleteItem);
     } catch (error) {
