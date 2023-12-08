@@ -104,7 +104,7 @@ router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
 
         let garageSale = await GarageSale.findById(deleteItem.saleId)
 
-        notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },item.request)
+        notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },deleteItem.request)
         console.log(garageSale)
         const index = garageSale.items.indexOf(deleteItem.id)
         if (index > -1){
