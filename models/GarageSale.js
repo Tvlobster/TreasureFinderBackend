@@ -22,6 +22,8 @@ garageSaleSchema.virtual('Item',{
     ref:'Item',
     localField:'items',
     foreignField:'_id'
+    localField:'_id',
+    foreignField:'owner'
 })
 
 garageSaleSchema.set('toObject',{virtuals:true})

@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const clientRouters = require('./routers/clientRouter');
 const sellerRouters = require('./routers/sellerRouter');
+const requestRouters = require('./routers/requestRouters');
 const session = require('express-session')
 const http = require('http')
 const socket = require('./modules/socketIOSetup')
@@ -50,15 +51,6 @@ app.use(session({
     })
 }))
 
-// function notifyNewGarageSale(garageSaleInfo) {
-//     io.emit('newGarageSale', garageSaleInfo);
-//     console.log("Send new garage sale")
-// }
-
-// // Simulate a new garage sale notification every 30 seconds (for testing)
-// setInterval(() => {
-// notifyNewGarageSale({ title: 'New Garage Sale', description: 'Check out the new garage sale near you!' });
-// }, 30000);
 
 
 
@@ -72,4 +64,5 @@ server.listen(process.env.PORT || 4000, () => {
 
 app.use(clientRouters);
 app.use(sellerRouters);
+app.use(requestRouters);
 

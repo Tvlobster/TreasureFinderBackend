@@ -115,6 +115,23 @@ router.delete('/user/delete',authenticateUser,(req,res)=>{
 
 
 
+router.get('/summary',authenticateUser, async (req, res) => {
+    try {
+        const users = await User.find()
+                              .populate({
+                                  path: 'GarageSale',
+                                  populate: {
+                                      path: 'items',
+                                      model: 'Item'
+                                  }
+                              });
+        res.send(users);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+
 //makes sure the user is logged in
 async function authenticateUser(req,res,next){
     console.log(req.session)
@@ -136,10 +153,7 @@ async function authenticateUser(req,res,next){
 }
 
 
-function notifyNewGarageSale(garageSaleInfo) {
-    io.emit('newGarageSale', garageSaleInfo);
-    console.log("Send new garage sale")
-}
+
 
 
 

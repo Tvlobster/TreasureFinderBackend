@@ -8,11 +8,9 @@ const router = new express.Router()
 
 
 //finds all garageSales
-router.get('/seller/allGarageSales',authenticateUser,async (req,res)=>{
+router.get('/seller/allGarageSales',authenticateUser ,async (req,res)=>{
     console.log("User connected to /seller/allGarageSales")
-    console.log(req.body)
     let GarageSales = await GarageSale.find({}).populate('User').exec();
-
     res.send({listOfGarageSales:GarageSales})
 })
 
@@ -51,6 +49,13 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
             return res.send({ error: 'Not authorized to delete this garage sale' });
         }
 
+
+        for (let i = 0; i < garageSale.items.length; i++) {
+           let deletedItem = await Item.findByIdAndDelete(garageSale.items[i]);
+           notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },deletedItem.request)
+        }
+
+
         const deleteGarageSale = await GarageSale.findByIdAndDelete(req.params.id)
         res.send({deleteGarageSale});
     } catch (error) {
@@ -68,6 +73,54 @@ router.delete('/seller/deleteGarageSale/:id',authenticateUser,async(req,res)=>{
 
 
 
+router.post('/seller/newItem',authenticateUser,async (req,res)=>{
+    let itemFromBody = req.body;
+    console.log(req.body)
+    try {
+        console.log("User connected to /seller/newItem")
+       let newItem = new Item(itemFromBody);
+       let editGarage = await GarageSale.findById(itemFromBody.saleId)
+       editGarage.items.push(newItem.id)
+       
+       const saveGarage = await editGarage.save();
+       newItem.owner = req.session.user_id;
+       const save = await newItem.save()
+
+       res.send(save);
+    } catch (error) {
+        res.send(error);
+    }
+
+})
+
+
+
+
+router.delete('/seller/deleteItem/:id',authenticateUser,async (req,res)=>{
+    try {
+        console.log("User connected to /seller/deleteItem")
+
+        let deleteItem = await Item.findByIdAndDelete(req.params.id);
+
+        let garageSale = await GarageSale.findById(deleteItem.saleId)
+
+        notifydeleteRequest({ title: 'Requested Item has been deleted', description: 'One of your requested items has been deleted' },item.request)
+        console.log(garageSale)
+        const index = garageSale.items.indexOf(deleteItem.id)
+        if (index > -1){
+            garageSale.items.splice(index);
+        }
+        const save = await garageSale.save();
+        
+
+        res.send(deleteItem);
+    } catch (error) {
+        res.send(error)
+    }
+
+
+
+});
 
 
 
@@ -85,11 +138,6 @@ router.get('/items',authenticateUser,async (req,res)=>{
     let Items = await Item.find({})
     res.send({listOfItems:Items})
 })
-
-
-
-
-
 
 
 async function authenticateUser(req,res,next){
@@ -113,9 +161,22 @@ async function authenticateUser(req,res,next){
 
 
 
+
+function notifydeleteRequest(requestInfo,user_id){
+    const io = socket.getIo();
+    io.emit('deleteRequest_'+user_id,requestInfo)
+    console.log("New Request Sent for user " + user_id)
+}
+
+
+
+
 function notifyNewGarageSale(garageSaleInfo) {
     const io = socket.getIo();
     io.emit('newGarageSale', garageSaleInfo);
     console.log("Send new garage sale")
 }
+
+
+
 module.exports = router;
