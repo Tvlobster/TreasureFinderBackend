@@ -12,6 +12,7 @@ const garageSaleSchema = new mongoose.Schema({
     ]
 })
 
+
 garageSaleSchema.virtual('User',{
     ref:'User',
     localField:'owner',
