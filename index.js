@@ -1,3 +1,9 @@
+//Author-Nicklas Mortensen-Seguin
+//Created 11/17/23
+//Last Modified-12/8/23
+
+
+//required Imports
 require('dotenv').config()
 const express = require("express")
 const path = require('path')
@@ -14,12 +20,13 @@ const MongoStore = require('connect-mongo')
  
 //middle ware
 const app = express()
-//this starts the server and assignes its port
 app.use(express.json())
 
 
+//creates the http server for the notifications.
 const server = http.createServer(app);
 
+//creates the websockets the allows users to connect to the server
 socket.initialize(server);
 
 
@@ -29,6 +36,7 @@ socket.initialize(server);
 const port = process.env.PORT
 //app.listen(port)
 
+//DB connection
 const url = process.env.MONGO_URL
 async function connect() {
     try {
@@ -42,6 +50,7 @@ async function connect() {
 
 connect();
 
+//session table in db
 app.use(session({
     secret: process.env.SESSION_KEY,
     resave: false,
@@ -54,14 +63,14 @@ app.use(session({
 
 
 
-
+//server start
 server.listen(process.env.PORT || 4000, () => {
     console.log(`Listening on port ${process.env.PORT || 4000}`);
 });
 
 
 
-
+//routers
 app.use(clientRouters);
 app.use(sellerRouters);
 app.use(requestRouters);

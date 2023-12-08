@@ -12,7 +12,7 @@ const Item = require("../models/Item")
 const router = new express.Router()
 
 
-
+//Registers a new user account to the db
 router.post('/users/register',async (req,res)=>{
     let userFromBody = req.body;
     console.log("User Connected to /users/register")
@@ -29,13 +29,14 @@ try {
 
 
 })
+//Logs a user into the app
+//finds the user in the db and checks to see if the password they entered is correct.
 router.post('/login',async (req,res)=>{
 
     console.log("User Connected to /login")
     console.log(req.body)
     let username = req.body.username
     let password = req.body.password
-
     const user = await User.findOne({username:username})
     if(!user){
         res.send({error:"error"})
@@ -54,6 +55,7 @@ router.post('/login',async (req,res)=>{
 
 
 })
+//pulls all users from the db.
 router.get('/users',authenticateUser,async (req,res)=>{
 
     try{
@@ -100,7 +102,7 @@ try{
 }
 });
 
-
+//logs the user out and deletes their session from the db.
 router.post('/users/logout',authenticateUser,(req,res)=>{
 req.session.destroy(()=>{
 console.log("Logged out successfully");
@@ -109,12 +111,14 @@ res.send({log:"Logged user out"})
 });
 
 //deletes user from the database.
+//this router goes un
 router.delete('/user/delete',authenticateUser,(req,res)=>{
 
 });
 
 
-
+//Prints out every user, their garageSales and the Items at those garageSales
+//basically just a db dumb.
 router.get('/summary',authenticateUser, async (req, res) => {
     try {
         const users = await User.find()
@@ -135,6 +139,8 @@ router.get('/summary',authenticateUser, async (req, res) => {
 //makes sure the user is logged in
 async function authenticateUser(req,res,next){
     console.log(req.session)
+    //pulls the session info from the cookie
+    //and checks to see if that user is in the db.
     if(!req.session.user_id){
         console.log("Unauthorized user")
         return res.send({error:"Unauthroized user"})
