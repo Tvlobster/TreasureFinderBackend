@@ -12,5 +12,23 @@ const garageSaleSchema = new mongoose.Schema({
     ]
 })
 
+
+garageSaleSchema.virtual('User',{
+    ref:'User',
+    localField:'owner',
+    foreignField:'_id'
+})
+
+garageSaleSchema.virtual('Item',{
+    ref:'Item',
+    localField:'items',
+    foreignField:'_id',
+    localField:'_id',
+    foreignField:'owner'
+})
+
+garageSaleSchema.set('toObject',{virtuals:true})
+garageSaleSchema.set('toJSON',{virtuals:true})
+
 const GarageSale = mongoose.model("GarageSale", garageSaleSchema, 'Garage_Sales')
 module.exports = GarageSale
