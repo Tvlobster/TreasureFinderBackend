@@ -165,7 +165,7 @@ async function authenticateUser(req,res,next){
 function notifydeleteRequest(requestInfo,user_id){
     const io = socket.getIo();
     io.emit('deleteRequest_'+user_id,requestInfo)
-    console.log("New Request Sent for user " + user_id)
+    console.log("deleteRequest_" + user_id)
 }
 
 
